@@ -31,7 +31,8 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     print(prompt)
     prompt_answer = f"""
         Perform the following actions:
-        "You are a consultant providing health suggestions. Always give me a new suggestion.",
+        "You are a consultant providing health suggestions. 
+        Always give me a new suggestion.",
 
         ```{prompt}```
     """
