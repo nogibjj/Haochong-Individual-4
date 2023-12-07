@@ -1,4 +1,4 @@
-# Haochong-individual-4 
+# Haochong-individual-4 [![CI](https://github.com/nogibjj/Haochong-Individual-4/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Haochong-Individual-4/actions/workflows/cicd.yml)
 This is a repo template for course 706_Data_Engineering Individual Project 4. First of all, I create `app.py` as my Flask app. After that, I create a templete called `index.html` to show my UI. Finally, I use Azure Web App Service to deploy my app, and I use Action to run `Makefile` and got a 100% pass. 
 
 Important files:
@@ -79,4 +79,3 @@ https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-macos
 https://learn.microsoft.com/en-us/cli/azure/container/app?view=azure-cli-latest#az-container-app-up
 https://learn.microsoft.com/en-us/answers/questions/1195197/upstream-connect-error-or-disconnect-reset-before
 https://code.visualstudio.com/docs/containers/quickstart-container-registries
-
