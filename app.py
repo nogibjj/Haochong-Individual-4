@@ -1,16 +1,16 @@
 import os
 from dotenv import load_dotenv
 import time
-from openai import OpenAI
-from flask import Flask, render_template, request
+import openai
+import random
+from flask import Flask, render_template, request, jsonify
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_APIKEY"))
+openai.api_key = os.getenv("OPENAI_APIKEY")
+
 
 # Define a simple rate limiter
 last_request_time = 0
-MIN_TIME_BETWEEN_REQUESTS = 2  # Set the minimum time between requests in seconds
-
 
 app = Flask(__name__)
 
@@ -27,35 +27,48 @@ def index():
     return render_template("index.html")
 
 
+def get_completion(prompt, model="gpt-3.5-turbo"):
+    print(prompt)
+    prompt_answer = f"""
+        Perform the following actions:
+        "You are a consultant providing health suggestions. Always give me a new suggestion.",
+
+        ```{prompt}```
+    """
+    messages = [{"role": "user", "content": prompt_answer}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,  # the degree of randomness of the model's output
+    )
+    random_choice_index = random.randint(0, len(response.choices) - 1)
+    return response.choices[random_choice_index].message["content"]
+
+
 @app.route("/generate", methods=["POST"])
 def generate():
     global last_request_time
 
     # Check if enough time has passed since the last request
     current_time = time.time()
-    if current_time - last_request_time < MIN_TIME_BETWEEN_REQUESTS:
-        return "Too many requests. Please try again later."
 
-    category = request.form["category"]
+    # Use request.form.get to handle potential BadRequestKeyError
+    category = request.form.get("category")
+    print(category)
+
+    if not category:
+        return jsonify({"error": "Category is missing in the form data."}), 400
+
     prompt = generate_prompt(category)
 
     # Use the new OpenAI interface
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a consultant providing health suggestions.",
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-        max_tokens=150,
-    )
+    response = get_completion(prompt)
 
-    return response.choices[0].message.content
+    # Update the last_request_time after a successful request
+    last_request_time = current_time
+
+    # Update the return statement in your generate function
+    return jsonify({"generated_text": response})
 
 
 if __name__ == "__main__":

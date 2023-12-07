@@ -12,7 +12,7 @@ fastapi==0.85.0
 uvicorn==0.18.3
 Flask==2.0.2
 gunicorn
-openai==0.28.0
+openai==0.28.1
 requests
 python-dotenv
 Werkzeug==2.2.2

@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set up Environment Variables
         run: |
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "OPENAI_APIKEY=${{ secrets.OPENAI_APIKEY }}" >> $GITHUB_ENV
       - name: install packages
         run: make install
       - name: lint

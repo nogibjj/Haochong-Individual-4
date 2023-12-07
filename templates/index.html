@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Consultation Service</title>
+
+    <!-- Add any additional styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #generatedSuggestion {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Health Consultation Service</h1>
+    <h1>Health Consultation Service</h1>
 
-<form action="/generate" method="post">
-    <label for="category">Select Health Category:</label>
-    <select id="category" name="category" required>
-        <option value="physical">Physical Health</option>
-        <option value="mental">Mental Health</option>
-    </select>
+    <form id="healthForm" action="/generate" method="post">
+        <label for="category">Select Health Category:</label>
+        <select id="category" name="category" required>
+            <option value="physical">Physical Health</option>
+            <option value="mental">Mental Health</option>
+        </select>
 
-    <button type="submit">Generate Suggestion</button>
-</form>
+        <!-- Use type="button" to prevent form submission -->
+        <button type="button" onclick="generateSuggestion()">Generate Suggestion</button>
+    </form>
 
-{% if generated_text %}
-    <div>
+    <div id="generatedSuggestion">
         <h2>Generated Suggestion:</h2>
-        <p>{{ generated_text }}</p>
+        <p id="suggestionText"></p>
     </div>
-{% endif %}
+
+    <script>
+        function generateSuggestion() {
+            var form = document.getElementById("healthForm");
+            var category = form.elements["category"].value;
+
+            // You may need to replace this URL with the actual endpoint that handles form submission
+            var url = "/generate";
+
+            // Assuming you use fetch API to make an asynchronous request
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded', // Change content type
+                },
+                body: new URLSearchParams({ category: category }), // Use URLSearchParams
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the generated suggestion text
+                    document.getElementById("suggestionText").innerText = data.generated_text;
+                    // Display the generated suggestion
+                    document.getElementById("generatedSuggestion").style.display = "block";
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 
 </body>
-</html>
 
+</html>
