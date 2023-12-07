@@ -1,37 +1,76 @@
-[![CI](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml)
-## Template for Python projects with RUFF linter
+# Haochong-individual-3 [![CI](https://github.com/nogibjj/Haochong-Individual-3/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Haochong-Individual-3/actions/workflows/cicd.yml)
+This is a repo template for course 706_Data_Engineering Individual Project 4. First of all, I create `app.py` as my Flask app. After that, I create a templete called `index.html` to show my UI. Finally, I use Azure Web App Service to deploy my app, and I use Action to run `Makefile` and got a 100% pass. 
 
-![1 15_rust_built_python_tools](https://github.com/nogibjj/python-ruff-template/assets/58792/db5f7bda-a977-4c67-acbe-a70fe034fbdf)
-
-
-
-1. First thing to do on launch is to open a new shell and verify virtualenv is sourced.
-
-Things included are:
-
-* `Makefile`
-
-* `Pytest`
-
-* `pandas`
-
-* `Ruff`:  
-
-Run `make lint` which runs `ruff check`.  You can find out more info on [Ruff here](https://github.com/astral-sh/ruff).
-
+Important files:
+* `app.py`
+* `index.html`
 * `Dockerfile`
+* `.env`(hidden)
+* `requirements.txt`
 
-* `GitHub copilot`
+## Purpose
+- build a publicly accessible auto-scaling container using Azure App Services and Flask.
 
-* `jupyter` and `ipython` 
 
-* A base set of libraries for devops and web
 
-* `githubactions`
+## Preparation 
+1. Add more packagesinto the `requirement.txt`
+2. Create repo on github and clone it to local
+2. Log into Azure and DockerHub 
 
-## References
+## App Introduction
+- This app is a simple web app that can provide you health suggestions. It includes following features:
+1. A title indicates the purpose of this app
+2. A button to select what kind of health suggestions you want to get
+3. A button to generate the suggestions
+4. Powered by GPT 3.5 Turbo, which has been meticulously fine-tuned to replicate the role of a consultant providing health suggestions, either psysical or mental.
 
-![1 1-function-essence-of-programming](https://github.com/nogibjj/python-ruff-template/assets/58792/f7f33cd3-cff5-4014-98ea-09b6a29c7557)
+## Key steps:
+1. Git clone the repo to local:
+- Allows me to create, run and test my code.
+
+2. Get my OpenAI API key:
+- Get my OpenAI API key from their website, create an `.env` file and set up `OPENAI_APIKEY`
+
+![Alt text](apikey.png)
+
+3. Transform and load data:
+- Transform the csv files into a Spark dataframe which are then converted into Delta Lake Tables and stored in the Databricks environement.
+
+4. Query Transformation and Vizulization:
+- Defines a Spark SQL query to perform a predefined transformation on the data. Then, uses the predifined transformation Spark dataframe to create vizualizations.
+
+5. File Path Checking for `make test`:
+- Implements a function to check if a specified file path exists in the Databricks FileStore and test whether the Databricks API is still connected. Use databricks to double check if the csv files and delta tables are created and stored in the right place.
+
+![Alt text](Filestore.png)
+
+![Alt text](<delta tables.png>)
+
+6. Clone repo into Databricks workspace:
+- Clone the repo into the Databricks workspace by using the UI. Make sure the repo was pulled successfully with the latest changes.
+
+7. Create a new cluster
+- Create a new cluster in databricks and run `make install` to install all the packages in the cluster, then run the code inside databricks to make sure they work before create a pipline.
+
+8. Create a new job to build a pipeline with automated trigger
+- Create a new job to build a pipeline in databricks and set up the automated trigger. Then, run the pipeline to see if it works.
+
+![Alt text](pipeline.png)
+
+9. Create secrets in Github:
+- Create secrets in Github to store the `SERVER_HOSTNAME`, `TOKEN` and `JOB_ID`.
+
+![Alt text](secrets.png)
+
+
+
+
+
+## Video demo link:
+
+
+## Reference:
 
 
 

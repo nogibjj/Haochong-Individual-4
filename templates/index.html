@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Consultation Service</title>
+</head>
+<body>
+
+<h1>Health Consultation Service</h1>
+
+<form action="/generate" method="post">
+    <label for="category">Select Health Category:</label>
+    <select id="category" name="category" required>
+        <option value="physical">Physical Health</option>
+        <option value="mental">Mental Health</option>
+    </select>
+
+    <button type="submit">Generate Suggestion</button>
+</form>
+
+{% if generated_text %}
+    <div>
+        <h2>Generated Suggestion:</h2>
+        <p>{{ generated_text }}</p>
+    </div>
+{% endif %}
+
+</body>
+</html>
+

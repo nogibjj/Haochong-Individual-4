@@ -1,23 +1,13 @@
-#FROM alpine:latest
-#RUN apk update && apk add bash
+FROM python:3.11
 
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim
+WORKDIR /code
 
-# Set the working directory in the container
-WORKDIR /app
+COPY requirements.txt .
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+RUN pip3 install -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-# Make port 5000 available to the world outside this container
-EXPOSE 6000
+EXPOSE 50505
 
-# Define environment variable
-ENV NAME World
-
-# Run app.py when the container launches
-CMD ["python", "app.py", "--host=0.0.0.0", "--port=6000"]
+ENTRYPOINT ["gunicorn", "app:app"]
